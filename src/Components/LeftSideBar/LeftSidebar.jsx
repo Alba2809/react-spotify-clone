@@ -1,10 +1,11 @@
-import { CiSearch } from "react-icons/ci";
-import { FaPlus } from "react-icons/fa";
 import { GoHome } from "react-icons/go";
 import { IoSearchOutline } from "react-icons/io5";
 import { LuLibrary, LuPlus } from "react-icons/lu";
 import TagsNav from "./TagsNav";
 import FilterNav from "./FilterNav";
+import { items } from "../../Utils/LibraryItems";
+import LibraryItem from "./LibraryItem";
+import { AnimatePresence } from "framer-motion";
 
 function LeftSidebar() {
   return (
@@ -18,7 +19,7 @@ function LeftSidebar() {
           Buscar
         </li>
       </ul>
-      <section className="flex-1 bg-[#121212] p-4 rounded-lg text-gray-400 font-sans font-semibold gap-y-4 flex flex-col">
+      <section className="flex-1 bg-[#121212] p-4 rounded-lg text-gray-400 font-sans font-semibold gap-y-4 flex flex-col overflow-y-auto">
         <header className="flex flex-row justify-between items-center">
           <button className="flex flex-row items-center gap-1 hover:text-white transition duration-500 ease-in-out">
             <LuLibrary size="1.8em" />
@@ -29,11 +30,20 @@ function LeftSidebar() {
           </button>
         </header>
         <TagsNav />
-        <FilterNav />
-        <ul>
-          <li>Tu me gusta</li>
-          <li>American teen</li>
-        </ul>
+        <main
+          className="size-full overflow-y-auto max-h-full"
+          style={{
+            scrollbarColor: "#666666 transparent",
+            msOverflowStyle: "none",
+          }}
+        >
+          <FilterNav />
+          <AnimatePresence>
+            {items.map((item) => (
+              <LibraryItem key={item.id} item={item} />
+            ))}
+          </AnimatePresence>
+        </main>
       </section>
     </>
   );
